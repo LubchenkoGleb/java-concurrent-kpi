@@ -1,4 +1,4 @@
-package com.kpi.lubchenko.lab1;
+package com.kpi.lubchenko.lab2;
 
 import javax.swing.*;
 

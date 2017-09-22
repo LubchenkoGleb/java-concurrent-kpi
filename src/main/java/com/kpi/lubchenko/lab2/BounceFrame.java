@@ -1,4 +1,4 @@
-package com.kpi.lubchenko.lab1;
+package com.kpi.lubchenko.lab2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +40,30 @@ public class BounceFrame extends JFrame {
         return addBall;
     }
 
+    private JButton create100BlueBallButton() {
+        JButton addBall = new JButton("Add 100x blue balls");
+        addBall.addActionListener(e -> {
+
+            for (int i = 0; i < 1000; i++) {
+                Ball b = new Ball(canvas, Color.BLUE);
+                canvas.add(b);
+
+                BallThread thread = new BallThread(b);
+                thread.setPriority(Thread.MIN_PRIORITY);
+                thread.start();
+                System.out.println("Thread name = " + thread.getName());
+            }
+            Ball b = new Ball(canvas, Color.RED);
+            canvas.add(b);
+
+            BallThread thread = new BallThread(b);
+            thread.setPriority(Thread.MAX_PRIORITY);
+            thread.start();
+            System.out.println("Thread name = " + thread.getName());
+        });
+        return addBall;
+    }
+
     private JPanel createButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Color.lightGray);
@@ -47,7 +71,7 @@ public class BounceFrame extends JFrame {
         JButton addRedButton = createBallButton("red", Color.RED, Thread.MAX_PRIORITY);
         buttonPanel.add(addRedButton);
 
-        JButton addBlueButton = createBallButton("blue", Color.BLUE, Thread.MIN_PRIORITY);
+        JButton addBlueButton = create100BlueBallButton();
         buttonPanel.add(addBlueButton);
 
         JButton buttonStop = new JButton("Stop");

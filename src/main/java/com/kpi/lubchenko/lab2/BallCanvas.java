@@ -1,4 +1,4 @@
-package com.kpi.lubchenko.lab1;
+package com.kpi.lubchenko.lab2;
 
 import lombok.Data;
 
@@ -51,8 +51,8 @@ public class BallCanvas extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        pockets = initPockets();
-        pockets.forEach(g2::fill);//прохожу по всем лузам и зарисову их
+//        pockets = initPockets();
+//        pockets.forEach(g2::fill);//прохожу по всем лузам и зарисову их
 
         for (int i = 0; i < balls.size(); i++) {//прохожу по всем шарикам
             Ball b = balls.get(i);
