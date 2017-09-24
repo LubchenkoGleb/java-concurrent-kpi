@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 
 @Data
 class Ball {
-    private int speed = 50;
+    private int speed = 10;
     private boolean isInPocket;
     private Color color;
     private BallCanvas canvas;

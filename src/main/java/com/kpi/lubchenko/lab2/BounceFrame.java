@@ -44,7 +44,7 @@ public class BounceFrame extends JFrame {
         JButton addBall = new JButton("Add 100x blue balls");
         addBall.addActionListener(e -> {
 
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 0; i < 100; i++) {
                 Ball b = new Ball(canvas, Color.BLUE);
                 canvas.add(b);
 
