@@ -11,13 +11,8 @@ public class BallThread extends Thread {
     public void run() {
         try {
             while (true) {
-                b.move();//посчитать новое положение шарика
-//                if(b.isInPocket()) {//если шарик попал в лузуу останавливаю поток
-//                    interrupt();
-//                }
-                System.out.println("Thread name = " + Thread.currentThread().getName());
-                Thread.sleep(b.getSpeed());//текущему потоку говоришь уснуть на заданное количество времени
-//                Thread.yield();
+                b.move();
+                Thread.sleep(b.getSpeed());
             }
         } catch (InterruptedException ex) { }
     }

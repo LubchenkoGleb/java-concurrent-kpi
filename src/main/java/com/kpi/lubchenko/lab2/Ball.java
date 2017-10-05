@@ -8,7 +8,6 @@ import java.awt.geom.Ellipse2D;
 @Data
 class Ball {
     private int speed = 10;
-    private boolean isInPocket;
     private Color color;
     private BallCanvas canvas;
     private int size = 20;
@@ -31,7 +30,6 @@ class Ball {
         g2.setPaint(color);
         g2.fill(ball);
         g2.drawString(number.toString(), x, y);
-        checkBallInThePocket(x, y);
     }
 
     public void move() {
@@ -54,17 +52,5 @@ class Ball {
             dy = -dy;
         }
         this.canvas.repaint();
-    }
-
-    private void checkBallInThePocket(int x, int y) {
-        boolean leftX = x + size < canvas.pocketRadius;
-        boolean rightX = x >  canvas.getWidth() - canvas.pocketRadius;
-
-        boolean topY = y + size < canvas.pocketRadius;
-        boolean downY = y > canvas.getHeight() - canvas.pocketRadius;
-
-        if((leftX && topY) || (rightX && topY) || (rightX && downY) || (leftX && downY)) {
-            isInPocket = true;
-        }
     }
 }

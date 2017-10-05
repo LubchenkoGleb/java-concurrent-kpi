@@ -6,7 +6,6 @@ public class Task3 {
         int iterations = 10000000;
         UnsyncCounter unsyncCounter = new UnsyncCounter();
 
-        int counter;
         Thread unsyncInc = new Thread(() -> {
             for (int i = 0; i < iterations; i++) {
                 unsyncCounter.inc();
@@ -23,8 +22,6 @@ public class Task3 {
         unsyncDec.join();
 
         System.out.println("unsyncCounter=" + unsyncCounter.counter);
-
-
 
         SyncCounter syncCounter = new SyncCounter();
 

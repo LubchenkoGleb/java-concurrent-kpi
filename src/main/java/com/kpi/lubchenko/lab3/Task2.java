@@ -48,6 +48,7 @@ public class Task2 {
 
         @Override
         public synchronized void addSymbol(String symbol) {
+            int[] a = new int[Integer.MAX_VALUE];
             System.out.print(symbol);
             symbolsCounter++;
 
