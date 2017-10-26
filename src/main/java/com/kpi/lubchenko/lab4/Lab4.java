@@ -8,12 +8,28 @@ public class Lab4 {
 
     public static void main(String[] args) throws InterruptedException {
 
+//        int size = 100;
+//        int[][] aRand = MatrixUtil.generateRandomMatrix(size);
+//        int[][] bRand = MatrixUtil.generateRandomMatrix(size);
+//
+//        int[][] resSimp = calculateSimple(aRand, bRand);
+//        MatrixUtil.printFragment(resSimp, 3);
+//
+//        int[][] resCannon1 = calculateCanon(aRand, bRand, 1);
+//        MatrixUtil.printFragment(resCannon1, 3);
+//
+//        int[][] resCannon2 = calculateCanon(aRand, bRand, 10);
+//        MatrixUtil.printFragment(resCannon2, 3);
+//
+//        int[][] resCannon3 = calculateCanon(aRand, bRand, 100);
+//        MatrixUtil.printFragment(resCannon3, 3);
+
+
         for (int i = 1; i <= 10; i++) {
             int size = i * 100;
             int[][] aRand = MatrixUtil.generateRandomMatrix(size);
             int[][] bRand = MatrixUtil.generateRandomMatrix(size);
             makeExperiments(aRand, bRand, size);
-
         }
 
         for (int i = 1; i <= 10; i++) {
@@ -41,14 +57,29 @@ public class Lab4 {
         experiment3.setEndTime();
         MatrixUtil.printFragment(experiment3Result, 3);
 
-        Experiment experiment4 = new Experiment("Simple, size=" + size + "'");
-        int[][] experiment4Result = calculateSimple(a, b);
+        Experiment experiment4 = new Experiment("Canon, size=" + size + ", blockSize=" + size);
+        int[][] experiment4Result = calculateCanon(a, b, size);
         experiment4.setEndTime();
         MatrixUtil.printFragment(experiment4Result, 3);
 
-        Experiment.compareExperiments(experiment1, experiment2, experiment3, experiment4);
-    }
+        Experiment experiment5 = new Experiment("Canon, size=" + size + ", blockSize=" + size / 2);
+        int[][] experiment5Result = calculateCanon(a, b, size / 2);
+        experiment5.setEndTime();
+        MatrixUtil.printFragment(experiment5Result, 3);
 
+        Experiment experiment6 = new Experiment("Canon, size=" + size + ", blockSize=" + 1);
+        int[][] experiment6Result = calculateCanon(a, b, 1);
+        experiment6.setEndTime();
+        MatrixUtil.printFragment(experiment6Result, 3);
+
+        Experiment experiment7 = new Experiment("Simple, size=" + size + "'");
+        int[][] experiment7Result = calculateSimple(a, b);
+        experiment7.setEndTime();
+        MatrixUtil.printFragment(experiment7Result, 3);
+
+        Experiment.compareExperiments(experiment1, experiment2,
+                experiment3, experiment4, experiment5, experiment6, experiment7);
+    }
 
     public static int[][] calculateFox(int[][] a, int[][] b, int blockSize) throws InterruptedException {
         int n = a.length;
@@ -70,6 +101,34 @@ public class Lab4 {
                     }
                 }
             });
+        }
+        executorService.shutdown();
+        executorService.awaitTermination(10, TimeUnit.MINUTES);
+        return c;
+    }
+
+    public static int[][] calculateCanon(int[][] a, int[][] b, int blockSize) throws InterruptedException {
+        int n = a.length;
+        int[][] c = new int[n][n];
+
+        ExecutorService executorService = Executors.newWorkStealingPool();
+        for (int i = 0; i < n; i += blockSize) {
+            for (int j = 0; j < n; j += blockSize) {
+                int row = i;
+                int col = j;
+
+                executorService.submit(() -> {
+                    for (int k = 0; k < blockSize; k++) {
+                        for (int l = 0; l < blockSize; l++) {
+                            for (int m = 0; m < n; m++) {
+                                int aVal = a[row + k][m];
+                                int bVal = b[m][col + l];
+                                c[row + k][col + l] += aVal * bVal;
+                            }
+                        }
+                    }
+                });
+            }
         }
         executorService.shutdown();
         executorService.awaitTermination(10, TimeUnit.MINUTES);
