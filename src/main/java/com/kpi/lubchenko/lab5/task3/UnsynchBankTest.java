@@ -1,8 +1,9 @@
-package com.kpi.lubchenko.lab5;
+package com.kpi.lubchenko.lab5.task3;
 
 public class UnsynchBankTest {
+
     public static final int NACCOUNTS = 10;
-    public static final int INITIAL_BALANCE = 10000000;
+    public static final int INITIAL_BALANCE = 10000;
 
     public static void main(String[] args) {
         Bank b = new Bank(NACCOUNTS, INITIAL_BALANCE);

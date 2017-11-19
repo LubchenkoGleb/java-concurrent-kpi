@@ -1,13 +1,14 @@
-package com.kpi.lubchenko.lab5;
+package com.kpi.lubchenko.lab5.task2;
 
 class Bank {
 
-    public static final int NTEST = 1000000;
+    public static final int NTEST = 10000;
     private final int[] accounts;
     private long ntransacts = 0;
+
+    public Bank(int n, int initialBalance) {
         accounts = new int[n];
-        for (int i = 0; i < account
-s.length; i++) {
+        for (int i = 0; i < accounts.length; i++) {
             accounts[i] = initialBalance;
         }
     }
@@ -23,10 +24,10 @@ s.length; i++) {
 
     public void test() {
         int sum = 0;
-        for (int account : accounts) {
-            sum += account;
+        for (int i = 0; i < accounts.length ; i++) {
+            sum += accounts[i];
         }
-        System.out.println("Transactions :" + ntransacts + " Sum: " + sum);
+        System.out.println("Transactions: " +ntransacts + " Sum: " +sum);
     }
 
     public int size() {
